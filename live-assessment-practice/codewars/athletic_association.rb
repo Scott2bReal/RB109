@@ -50,11 +50,18 @@ Data Structure: Array, hash?
 Algorithm:
 
   - Initialize hash called stats = {}
-  - Make an array containing the times (split string separater being ', ')
+    - Will be used to store final stats range, mean, median, and used to
+    popoulate the ultimate returned string
+
+  - Make a hash containing the times (split string separater being ', ')
   - For each time in that array
     - Split into its own array (probably using map)
+    - Will contain keys hours, minutes, seconds, and arrays of all the times
+    from the input
 
   - Make method for range, average, and median
+    - Will return an integer given an array of numbers
+
   - Make method to format string returned by those methods
 
   - Populate stats hash keys for each stat with values being the stats of the
@@ -68,7 +75,12 @@ Algorithm:
 def stat(string)
   stats = initialize_stats_hash
   times = make_times_hash(make_times_array(string))
-  stats[:range] = 
+
+  stats[:range] = [range(times[:hours]), range(times[:minutes]), range(times[:seconds])]
+  stats[:mean] = [mean(times[:hours]), mean(times[:minutes]), mean(times[:seconds])]
+  stats[:median] = [median(times[:hours]), median(times[:minutes]), median(times[:seconds])]
+
+  p stats
 end
 
 def initialize_stats_hash
@@ -92,9 +104,9 @@ def make_times_hash(times)
   times_hash = { hours: [], minutes: [], seconds: [] }
   
   times.each do |time|
-    times_hash[:hours] << time[0]
-    times_hash[:minutes] << time[1]
-    times_hash[:seconds] << time[2]
+    times_hash[:hours] << time[0].to_i
+    times_hash[:minutes] << time[1].to_i
+    times_hash[:seconds] << time[2].to_i
   end
 
   times_hash
